@@ -267,11 +267,11 @@ a:active {
 
 .navbar-menu {
   float: right;
-  list-style: none;
 }
 .nav {
   margin: 0;
   padding: 0;
+  list-style: none;
   text-align: center;
 }
 .nav .nav-item {
