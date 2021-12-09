@@ -7,7 +7,7 @@
     @extend .info;
     }
   
-  .warning {
+  &.warning {
     @extend .info;
     color: #FF0000;
   }
