@@ -1,11 +1,11 @@
 /* 8. Margin mixin  */
 @mixin body-mix {
-    margin: 10;
-    padding: 10;
+    margin: 10px;
+    padding: 10px;
 }
 @mixin div-mix {
-    margin: 15;
-    padding: 15;
+    margin: 15px;
+    padding: 15px;
 }
   
 body {
