@@ -14,7 +14,7 @@ $string-b: to-lower-case($string-b + unquote(""));
     $char-b: str-slice($string-b, $i, $i);
     
     @if $char-a and $char-b and index(
-            $order, $char-a) != index($sort-order, $char-b) {
+            $sort-order, $char-a) != index($sort-order, $char-b) {
     @return index(
             $sort-order, $char-a) < index($sort-order, $char-b);
     }
@@ -43,4 +43,4 @@ $string-b: to-lower-case($string-b + unquote(""));
     }
     @return $list;
 }
-@debug sort($list_to_sort)
+@debug sort($list_to_sort, $sort-order);
