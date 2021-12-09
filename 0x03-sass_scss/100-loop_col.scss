@@ -2,6 +2,6 @@
 $percent: 100;
 
 @for $i from 1 through 4 {
-    $percet: $percent / 2;
+    $percet: $percent / $i;
     .col-#{$i} { width: #{$percent}px;}
 }
