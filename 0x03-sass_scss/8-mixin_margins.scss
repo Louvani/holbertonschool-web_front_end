@@ -9,8 +9,8 @@
 }
   
 body {
-    @include body-mix()
+    @include body-mix;
 }
 div {
-    @include div-mix()
+    @include div-mix;
 }
