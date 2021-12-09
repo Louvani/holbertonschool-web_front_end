@@ -1,6 +1,5 @@
 /* 13. Columns and operators */
-$percent: 100;
 
 @for $i from 1 through 4 {
-    .col-#{$i} { width: #{$percent / $i}px;}
+    .col-#{$i} { width: 100 / #{$i}px;}
 }
