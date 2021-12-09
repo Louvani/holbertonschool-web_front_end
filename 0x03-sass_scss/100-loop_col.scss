@@ -1,6 +1,5 @@
 /* 13. Columns and operators */
 
 @for $i from 1 through 4 {
-    $result: 100/$i;
-    .col-#{$i} { width: $result%;}
+    .col-#{$i} { width: #{100/$i}%;}
 }
