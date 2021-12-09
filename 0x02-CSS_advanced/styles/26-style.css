@@ -379,6 +379,6 @@ ul.row {
 }
 .card-testimonial .card-avatar cite {
   display: block;
-  padding: 1rem;
+  padding-top: 1rem;
   color: var(--color-primary);
 }
