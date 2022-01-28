@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+  <head>
+
+    <meta charset='utf-8' />
+      <title>Task 7</title>
+      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <script type='application/javascript'>
+      $(function () {
+        function createSearchForm() {
+          $("body").append($('<input type="text">'));
+          $("body").append($('<input type="submit">').click(
+            function() {
+              queryWikipedia($("input").first().val());
+            }
+          ));
+          $("body").append($('<ul></ul>'));
+        }
+        function addNewArticle(id, title, snippet) {
+          $("ul").append($("<li></li>"))
+          $("li:last-child").append($("<p></p>").append($(`<span>${id} - </span>`).append($(`<b>${title}</b>`))))
+          $("li:last-child").append($(`<p>${snippet}</p>`))
+        }
+        function queryWikipedia(search) {
+          $.ajax({
+            url: "http://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + search + "&format=json",
+            type: 'GET',
+            crossDomain: true,
+            dataType: 'jsonp',
+            success: function (res) {
+              for (let item of res.query.search) {
+                addNewArticle(item.pageid, item.title, item.snippet)
+              }
+            }
+          });
+        }
+        createSearchForm();
+      });
+    </script>
+  </body>
+
+</html>

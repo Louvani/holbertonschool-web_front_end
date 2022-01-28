@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+  <head>
+
+    <meta charset='utf-8' />
+      <title>Task 7</title>
+      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <script type='application/javascript'>
+      $(function () {
+        function createSearchForm() {
+          $("body").append($('<input type="text">'));
+          $("body").append($('<input type="submit">').click(
+            function() {
+              queryWikipedia($("input").first().val());
+            }
+          ));
+          $("body").append($('<ul></ul>'));
+          $("body").append($('<ul id="pagination"></ul>').css({'display': 'inline-flex'}));
+        }
+        function addNewArticle(id, title, snippet) {
+          $("ul").append($("<li></li>"))
+          $("li:last-child").append($("<p></p>").append($(`<span>${id} - </span>`).append($(`<b>${title}</b>`))))
+          $("li:last-child").append($(`<p>${snippet}</p>`))
+        }
+        function queryWikipedia(search, offset=0) {
+          $.ajax({
+            url: "http://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + search + "&format=json",
+            type: 'GET',
+            crossDomain: true,
+            dataType: 'jsonp',
+            success: function (res) {
+              for (let item in res.query.search) {
+                addNewArticle(item.pageid, item.title, item.snippet)
+              }
+              buildPagination(res.query.searchinfo.totalhits, 10, offset);
+            }
+          });
+        }
+        function buildPagination(numberOfItems, itemsPerPage, currentOffset) {
+          $("#pagination ").empty()
+          let page = numberOfItems / itemsPerPage
+          for (let index = 1; index <= page; index++) {
+            $("#pagination")
+              .append($(`<li>${index}</li>`)
+              .css({ 'cursor': 'pointer', 'margin-left': '10px', 'list-style': 'none' }))
+          }
+          $("#pagination li").click(
+            function () {
+                $("ul:nth-of-type(1)").empty()
+                queryWikipedia($("input").first().val(), $(this).text() * 10)
+            }
+          )
+          $(`#pagination li:nth-of-type(${currentOffset / 10})`)
+            .css('font-weight', 'bold')
+        }
+        createSearchForm();
+      });
+    </script>
+  </body>
+
+</html>
