@@ -5,6 +5,7 @@
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <meta name='viewport' content='width=in, initial-scale=1.0'>
   <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 </head>
 <body>
   <div>
@@ -12,7 +13,7 @@
       <h2>Login to the website</h2>
       <input type='text' id='firstname' name='firstname' placeholder='Firstname'>
       <input type='text' id='email' name='email' placeholder='Email'>
-      <button onclick='setCookies()' type='submit'>Log me in</button>
+      <button onclick='setCookiesAndShowWelcomeMessage()' type='submit'>Log me in</button>
     </form>
   </div>
 
@@ -32,18 +33,19 @@
     }
 
     function deleteCookiesAndShowForm() {
-      document.cookie = 'firstname=; expires=Thu, 01 Jan 1970 00:00:00 UTC;'
-      document.cookie = 'email=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+      Cookies.remove('firstname')
+      Cookies.remove('email')
       showForm();
     }
 
     function showWelcomeMessageOrForm() {
-      const name = getCookie('firstname');
+      const name = Cookies.get('firstname');
       if (name === '') {
         showForm();
       } else {
         const welcome = document.createElement("h1");
         welcome.innerHTML = `Welcome ${name} `;
+
         const logout = document.createElement("a");
         logout.innerHTML = "(logout)";
         logout.style.cssText = `color: black; font-style: italic;
@@ -51,30 +53,21 @@
         logout.addEventListener('click', () => {
           deleteCookiesAndShowForm();
         });
+
         welcome.appendChild(logout);
         document.querySelector("body").append(welcome);
         hideForm();
       }
     }
 
-    function setCookies() {
-      const date = new Date();
-      date.setTime(date.getTime()+ (10*24*60*60*1000))
-      document.cookie = `firstname=${document.getElementById('firstname').value}`;
-      document.cookie = `email=${document.getElementById('email').value}`;
-      document.cookie = `expires=${date}`;
+    function setCookiesAndShowWelcomeMessage() {
+      const name = document.getElementById('firstname').value;
+      const email = document.getElementById('email').value;
+      Cookies.set('firstname', name, { expires: 10 });
+      Cookies.set('email', name, { expires: 10 });
+      showWelcomeMessageOrForm();
     }
 
-    function getCookie(name) {
-      const cookies = document.cookie.split('; ')
-      for (const cookie of cookies) {
-        let aux = cookie.split('=');
-        if (aux[0] === name) {
-          return (aux[1]);
-        }
-      }
-      return ('');
-    }
     showWelcomeMessageOrForm();
     </script>
 </body>
